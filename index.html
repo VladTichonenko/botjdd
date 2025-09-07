@@ -2068,6 +2068,41 @@
                 font-size: 14px;
             }
         }
+
+
+
+        @media (max-width: 480px) {
+        .education-tabs {
+            gap: 8px;
+        }
+        
+        .education-tab {
+            padding: 8px 12px;
+            font-size: 12px;
+        }
+        
+        .education-grid {
+            gap: 12px;
+        }
+        
+        .education-item {
+            padding: 12px;
+        }
+        
+        .education-item-name {
+            font-size: 15px;
+        }
+        
+        .price-image-container {
+            margin-top: 20px;
+            padding: 10px;
+            display: none;
+        }
+        
+        .price-image {
+            max-height: 250px;
+        }
+    }
     </style>
 </head>
 <body>
@@ -2163,9 +2198,6 @@
                                     <p>Взаимодействие с API</p>
                                 </div>
                             </div>
-                            <video loop muted playsinline>
-                                <source src="BOT.png" type="video/mp4">
-                            </video>
                         </div>
                         
                         <!-- Карточка 2 - Сайты -->
@@ -2177,9 +2209,6 @@
                                     <p>Оптимально для знакомтсва клиентов с Вами</p>
                                 </div>
                             </div>
-                            <video loop muted playsinline>
-                                <source src="SITE.png">
-                            </video>
                         </div>
                         
                         <!-- Карточка 3 - ТМА -->
@@ -2191,23 +2220,17 @@
                                     <p>Оптимально для отображение товара и взаимодействие с пользователями</p>
                                 </div>
                             </div>
-                            <video loop muted playsinline>
-                                <source src="TMA.png" type="video/mp4">
-                            </video>
                         </div>
                         
                         <!-- Карточка 4 - Apps -->
                         <div class="card" data-video="video4.mp4">
                             <div class="card-image">
-                                <img src="https://www.carrotquest.io/blog/wp-content/uploads/2024/11/image1-1.png" alt="Мобильные Приложения">
+                                <img src="APP.png" alt="Мобильные Приложения">
                                 <div class="card-overlay">
                                     <h3>Мобильные Приложения</h3>
                                     <p>Хорошо подходит для продуктов, где важно постоянно присутсвие на устройтсве</p>
                                 </div>
                             </div>
-                            <video loop muted playsinline>
-                                <source src="https://smithdevelopers.ru/out/AMLTON-720.webm" type="video/mp4">
-                            </video>
                         </div>
                         
                         <!-- Карточка 5 - AI -->
@@ -2219,11 +2242,10 @@
                                     <p>Описание</p>
                                 </div>
                             </div>
-                            <video loop muted playsinline>
-                                <source src="AI.png" type="video/mp4">
-                            </video>
                         </div>
                     </div>
+                    
+                    
                     
                     <div class="slider-controls">
                         <div class="dot active" data-title="Чат-Боты"></div>
@@ -2236,7 +2258,77 @@
             </div>
         </div>
     </div>
-
+<script>
+            // Скрипт для слайдера карточек
+            function initSlider() {
+            const sliderContainer = document.querySelector('.slider-container');
+            const textContent = document.querySelector('.text-content');
+            const slider = document.querySelector('.cards-slider');
+            const dots = document.querySelectorAll('.dot');
+            const cards = document.querySelectorAll('.card');
+            let currentIndex = 0;
+            let visibleCards = 3;
+            
+            // Конфигурация для каждого слайда (только изображения)
+            const slideConfig = [
+                { imageSrc: "BOT.png" },
+                { imageSrc: "SITE.png" },
+                { imageSrc: "TMA.png" },
+                { imageSrc: "APP.png" },
+                { imageSrc: "AI.png" }
+            ];
+            
+            function updateSlider() {
+                const cardElement = cards[0];
+                const cardWidth = cardElement.offsetWidth + parseInt(getComputedStyle(slider).gap);
+                
+                let offset;
+                if (currentIndex === 0) {
+                    offset = 0;
+                    textContent.classList.remove('hidden');
+                    visibleCards = 3;
+                } else {
+                    offset = -currentIndex * cardWidth;
+                    textContent.classList.add('hidden');
+                    visibleCards = 4;
+                }
+                
+                slider.style.transform = `translateX(${offset}px)`;
+                
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+                
+                // Устанавливаем изображения и убираем любые видео
+                cards.forEach((card, index) => {
+                    card.classList.remove('active');
+                    const image = card.querySelector('.card-image img');
+                    if (image && slideConfig[index]) {
+                        image.src = slideConfig[index].imageSrc;
+                        image.style.opacity = '1';
+                    }
+                    const video = card.querySelector('video');
+                    if (video) {
+                        video.pause?.();
+                        video.currentTime = 0;
+                        video.style.display = 'none';
+                    }
+                });
+            }
+            
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateSlider();
+                });
+            });
+            
+            updateSlider();
+            window.addEventListener('resize', function() {
+                updateSlider();
+            });
+        }
+</script>
 
       <section class="portfolio-section" id="portfolio">
         <div class="portfolio-container">
@@ -2371,15 +2463,7 @@
                 
                 
                 <!-- Остальные -->
-                <div class="portfolio-item" data-category="other">
-                    <div class="portfolio-image">
-                        <img src="https://source.unsplash.com/random/600x400/?mobile,1" alt="Мобильное приложение">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Мобильное приложение</h3>
-                        <p>Кроссплатформенное решение для iOS и Android в виде PWA</p>
-                    </div>
-                </div>
+               
                 
                 <div class="portfolio-item" data-category="other">
                     <div class="portfolio-image">
@@ -5367,7 +5451,6 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
-
 
 
 
